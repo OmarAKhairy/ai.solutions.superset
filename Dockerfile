@@ -1,10 +1,13 @@
 FROM apache/superset:latest
 
 USER root
-
 # Create a configuration file
 RUN mkdir -p /app/superset
 COPY superset_config.py /app/superset/superset_config.py
+
+# Install PostgreSQL driver and other dependencies
+RUN pip install --no-cache-dir psycopg2-binary && \
+    pip install --no-cache-dir sqlalchemy-redshift
 
 # Switch back to superset user
 USER superset
